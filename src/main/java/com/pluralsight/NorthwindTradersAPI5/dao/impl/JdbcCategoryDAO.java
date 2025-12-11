@@ -71,12 +71,11 @@ public class JdbcCategoryDAO implements ICategoryDAO {
     public Category add(Category category) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statementOfCategory = connection.prepareStatement("""
-                             INSERT INTO Category (CategoryID, CategoryName, Description) VALUES (?, ?, ?)""",
+                             INSERT INTO Category (CategoryName, Description) VALUES (?, ?, ?)""",
                      Statement.RETURN_GENERATED_KEYS)) {
 
-            statementOfCategory.setInt(1, category.getCategoryId());
-            statementOfCategory.setString(2, category.getCategoryName());
-            statementOfCategory.setString(3, category.getDescription());
+            statementOfCategory.setString(1, category.getCategoryName());
+            statementOfCategory.setString(2, category.getDescription());
 
             int affectedRows = statementOfCategory.executeUpdate();
 
